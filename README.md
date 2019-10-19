@@ -50,7 +50,39 @@ The boards can contain _Element_ objects, and since _Space_ and _Mine_ inherits 
 We have two boards of different size and place a different number of mines on each one. But in the second case it takes longer to place all the mines.
 
 #### Why placing less bombs takes longer in the second case?
+Even though the blue board is smaller and has one less bomb, the difference between spaces and bombs is far smaller compared to the red board. This means that the program has to generate a random number that has yet no been occupied by a bomb, and as more bombs are placed there are fewer available spaces. For example, for the last bomb in the blue board there are only 2 available spaces, but the program will have to find it using random numbers that go up to 1,500,000; meaning that there is only a 0.000133% of finding those two spaces. 
+
 #### Knowing that usually there are going to be more bombs than spaces in the final boards, how would you change the method _minningTheBoard_ to be more efficient?
+If there are gonna be more bombs than spaces it makes sense to first fill the board with bombs and later add the spaces. Depending on the ratio of bombs:spaces the code will decide if it is better to _miningTheBoard_ or to _spacingTheBoard_
+
+```java
+if(ratio <= 0.5) {
+            for(int i = 0; i < size; i++) {
+                myBoard.put(i, new Space());
+            }
+            // Adds the mines
+            minningTheBoard(bombs);
+        } else {
+            for(int i = 0; i < size; i++) {
+                myBoard.put(i, new Mine());
+            }
+            // Adds the spaces
+            spacingTheBoard(size-bombs);
+        }
+```
+```java
+public static void spacingTheBoard(int numberSpaces) {
+        Random random = new Random();
+        while (numberSpaces > 0) {
+            Integer trial = new Integer(random.nextInt(myBoard.size()));
+
+            if (myBoard.get(trial) instanceof Mine) {
+                myBoard.put(trial, new Space());
+                numberSpaces--;
+            }
+        }
+    }
+```
 
 **Strategy**: Understand well what the code does. Use conditionals breakpoints.
 
