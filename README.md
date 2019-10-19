@@ -24,8 +24,21 @@ In this code there is a class called WordAnalyzer that contains several methods 
 For some reason, the methods are not working properly, sometimes they return the correct value and others don't. You need to answer the next questions.
 
 #### Why the method _firstMultipleCharacter_ is returning "c" for the word _comprehensive_, when the correct answer should be "e"?
+This is because the position in the _find_ method was the same as the one in _firstMultipleCharacter, meaning that the program was checking if a character was equal to itself. Hence, "c" by being the first character in the word was being checked if it was equal to itself, which was true. 
+
 #### Why the method _firstRepeatedCharacter_ is throwing an exception?
+Becuase the method is going beyond the size of the String, it is looking for a character in a position greater than the string itseld. To solve this it is required to limit _i_ to be one less than the actual length of the string. 
+```java 
+for (int i = 0; i < word.length()-1; i++)
+```
+
 #### Why the method _countGroupsRepeatedCharacters_ returns 3 in one case when it should be 4?
+That is beacuse it wasn't taking into consideration the first group of repeated characters, as the loop started in position 1. I added an if statement to check if the character in position 0 equals the one at position 1. 
+```java
+if (word.charAt(0) == word.charAt(1)) {
+            c++;
+        }
+```
 
 **Strategy**: Place breakpoints before the methods are executed, step into them and see what happens.
 
