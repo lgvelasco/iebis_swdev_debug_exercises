@@ -91,4 +91,25 @@ public static void spacingTheBoard(int numberSpaces) {
 In this case this code looks really simple. When the "d" reaches the value 1.0, the program should end, but it never does.
 
 #### Why does not appear a message indicating that "d is 1"?
+That's because double variables are stored in binary (2 base) while humans work with base 10. Making it impossible to represent certain fractions. 
+
+>Base 10 has no way to exactly represent the fraction 1/3. You can approximate it as 0.3333333, but eventually you reach the >limit of how many digits you can store, so you have to stop. In base 2, it happens that one of the fractions you can’t >accurately represent is the decimal value 1/10
+
+For more information click [here](https://www.dummies.com/programming/java/weird-things-java-math/)
+
 #### How will you fix it?
+After some research I found that the best way is to use _BigDecimal_ which is a class that offers greater precision in these cases. 
+
+```java
+ public static void main(String [] args) {
+            BigDecimal d = new BigDecimal(0.0);
+            BigDecimal max = new BigDecimal(1.0);
+
+            while (d.equals(max)) {
+                BigDecimal add = new BigDecimal(0.1);
+                d = d.add(add);
+            }
+
+            System.out.println("d is 1");
+        }
+```
